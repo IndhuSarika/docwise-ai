@@ -1,11 +1,10 @@
-__pycache__/
-*.py[cod]
 .venv/
 venv/
+__pycache__/
+*.py[cod]
 node_modules/
 dist/
 .env
 .env.*
 logs/
 .DS_Store
-.vscode/
