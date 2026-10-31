@@ -8,13 +8,14 @@ import {
   MessageSquare,
   Send,
   Sparkles,
-  Trash2,
   UploadCloud,
   X,
 } from "lucide-react";
 import "./App.css";
 
-const API = "http://127.0.0.1:8000";
+const API = (
+  import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
+).replace(/\/$/, "");
 
 const suggestions = [
   "Summarize this document",
@@ -92,7 +93,7 @@ export default function App() {
       const response = await fetch(`${API}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: cleanQuestion, top_k: 5 }),
+        body: JSON.stringify({ question: cleanQuestion, top_k: 5, document_id: documentInfo.document_id }),
       });
       const data = await response.json();
 
@@ -109,7 +110,7 @@ export default function App() {
         },
       ]);
     } catch (err) {
-      setError(`${err.message} Please check that the backend and Ollama are running.`);
+      setError(`${err.message} Please check that the backend and configured AI provider are available.`);
     } finally {
       setAsking(false);
     }
